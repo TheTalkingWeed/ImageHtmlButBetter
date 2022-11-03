@@ -96,7 +96,7 @@ public class HtmlUtils {
         }
     }
 
-    public static void makeIndexHtml(Path path){
+    public static void makeIndexHtml(Path path,int depth){
         File index = new File((path.toFile()) + "/index.html");
         File[] files = path.toFile().listFiles();
 
@@ -127,7 +127,7 @@ public class HtmlUtils {
 
         String backLink = "<h2><a href = \"../index.html\">Back</a></h2>\n";
 
-        System.out.println(index);
+        String backDepth = "../".repeat(depth) + "index.html";
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(index));
 
@@ -141,7 +141,7 @@ public class HtmlUtils {
                 "  <title>Document</title>\n"+
                 "</head>\n"+
                 "<body>\n"+
-                "    <h1><a href=\"C:\\Users\\Valaki\\Documents\\picsforproject\\index.html\">Start Page</a></h1>\n"+
+                "    <h1><a href=\""+backDepth+"\">Start Page</a></h1>\n"+
                 backLink +
                 "  <h1>Directories</h1>\n"+
                 dirs+
@@ -177,5 +177,14 @@ public class HtmlUtils {
     }
 
 
+    public static int getDepth(Path p1,Path p2){
+        int result = 0;
 
+        String[] p1splitted = p1.toString().split("\\\\");
+        String[] p2splitted = p2.toString().split("\\\\");
+
+        result = p2splitted.length - p1splitted.length;
+
+        return result;
+    }
 }

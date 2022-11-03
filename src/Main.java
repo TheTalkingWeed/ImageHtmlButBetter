@@ -36,7 +36,9 @@ public class Main {
 
         }
 
-        dirs.forEach(HtmlUtils::makeIndexHtml);
+        for (Path p:dirs){
+            HtmlUtils.makeIndexHtml(p,HtmlUtils.getDepth(dirs.get(0),p));
+        }
 
 
 
