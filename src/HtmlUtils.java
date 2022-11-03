@@ -45,7 +45,7 @@ public class HtmlUtils {
 
     }
 
-    public static void makeImgHtml(Path picPath,boolean hasnext,boolean hasprev,Path... morePath){
+    public static void makeImgHtml(Path picPath,boolean hasnext,boolean hasprev,int depth,Path... morePath){
         Path temp = getHtmlPath(picPath);
         File f = new File(String.valueOf(temp.toFile()));
         String arrowBack;
@@ -67,7 +67,7 @@ public class HtmlUtils {
         }
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-
+            String backDepth = "../".repeat(depth-1) + "index.html";
             bw.write(
 
                " <!DOCTYPE html>\n"+
@@ -79,7 +79,7 @@ public class HtmlUtils {
                    "     <title>"+ f.getName() +"</title>\n"+
                    " </head>\n"+
                    " <body>\n"+
-                   "    <h1><a href=\"C:\\Users\\Valaki\\Documents\\picsforproject\\index.html\">Start Page</a></h1>\n"+
+                   "    <h1><a href=\""+backDepth+"\">Start Page</a></h1>\n"+
                    "    <h2><a href=\"./index.html\">Back</a></h2>\n"+
                    arrowBack + "\n" +
                    picPath.getFileName()+"\n" +
@@ -125,7 +125,7 @@ public class HtmlUtils {
         }
         htmlFiles.append("</ul>\n");
 
-        String backLink = "<h2><a href = \"../index.html\">Back</a></h2>\n";
+        String backLink = depth == 0 ? "":"<h2><a href = \"../index.html\">Back</a></h2>\n";
 
         String backDepth = "../".repeat(depth) + "index.html";
         try {
