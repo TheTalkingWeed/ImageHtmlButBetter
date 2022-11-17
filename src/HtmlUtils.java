@@ -36,7 +36,8 @@ public class HtmlUtils {
                             .endsWith(".jpg") || p.getFileName().toString()
                             .endsWith(".png") || p.getFileName().toString()
                             .endsWith(".jpeg") || p.getFileName().toString()
-                            .endsWith(".bmp"))
+                            .endsWith(".bmp") || p.getFileName().toString()
+                            .endsWith(".html"))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -54,16 +55,17 @@ public class HtmlUtils {
         Path prev;
 
         if (morePath.length == 2){
-            prev = getHtmlPath(morePath[0]);
-            next = getHtmlPath(morePath[1]);
-
+            prev = getHtmlPath(morePath[1]);
+            next = getHtmlPath(morePath[0]);
+            System.out.println(prev + "-------ez van ");
+            System.out.println(picPath + "-------ennekasdf");
             arrowBack = "<a href= \" ./"+prev.toFile().getName()+"\"><<</a>";
             arrowForward ="<a href= \" ./"+next.toFile().getName()+"\">>></a>";
 
 
         }else{
-             arrowForward= hasprev ? "<a href= \"./"+getHtmlPath(morePath[0]).toFile().getName()+"\">>></a>" : "<a>>></a>";
-            arrowBack = hasnext ? "<a href= \" ./"+getHtmlPath(morePath[0]).toFile().getName()+"\"><<</a>" : "<a><<</a>";
+             arrowForward = hasnext ? "<a href= \"./"+getHtmlPath(morePath[0]).toFile().getName()+"\">>></a>" : "<a>>></a>";
+            arrowBack = hasprev ? "<a href= \" ./"+getHtmlPath(morePath[0]).toFile().getName()+"\"><<</a>" : "<a><<</a>";
         }
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
@@ -116,11 +118,11 @@ public class HtmlUtils {
         StringBuilder htmlFiles = new StringBuilder();
         htmlFiles.append("<ul>\n");
         for (File file : files) {
-            if (isHtml(file.toPath()) && !file.getName().equals("index.html"))
+            if (isHtml(file) && !file.getName().equals("index.html"))
                 htmlFiles.append("<li><a href=\"")
                          .append(file.getName())
                          .append("\">")
-                         .append(file.getName())
+                         .append(file.getName().replace(".html",".jpg"))
                          .append("</a></li>\n");
         }
         htmlFiles.append("</ul>\n");
@@ -166,14 +168,15 @@ public class HtmlUtils {
     }
 
     public static void deleteHTML(Path path){
-        if (isHtml(path)){
-            File f = new File(String.valueOf(path.toFile()));
+        if (isHtml(path.toFile())){
+            File f = new File(path.toString());
             f.delete();
         }
     }
 
-    public static boolean isHtml(Path path){
-        return path.getFileName().toString().endsWith(".html");
+    public static boolean isHtml(File file){
+        String str= file.toString();
+        return str.contains(".html");
     }
 
 
