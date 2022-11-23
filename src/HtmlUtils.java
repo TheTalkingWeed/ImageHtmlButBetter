@@ -12,7 +12,7 @@ public class HtmlUtils {
 
 
     public void HtmlUtils(){}
-    public static List<Path> getDirs(Path path){
+    public  List<Path> getDirs(Path path){
 
         List<Path> result;
         try (Stream<Path> walk = Files.walk(path)) {
@@ -25,7 +25,7 @@ public class HtmlUtils {
         return result;
 
     }
-    public static List<Path> findByFileExtension(Path path) {
+    public  List<Path> findByFileExtension(Path path) {
 
         if (!Files.isDirectory(path)) {
             throw new IllegalArgumentException("Path must be a directory!");
@@ -49,7 +49,7 @@ public class HtmlUtils {
 
     }
 
-    public static void makeImgHtml(Path picPath,boolean hasnext,boolean hasprev,int depth,Path... morePath){
+    public  void makeImgHtml(Path picPath,boolean hasnext,boolean hasprev,int depth,Path... morePath){
         Path temp = getHtmlPath(picPath);
         File f = new File(String.valueOf(temp.toFile()));
         String arrowBack;
@@ -101,7 +101,7 @@ public class HtmlUtils {
         }
     }
 
-    public static void makeIndexHtml(Path path,int depth){
+    public  void makeIndexHtml(Path path,int depth){
         File index = new File((path.toFile()) + "/index.html");
         File[] files = path.toFile().listFiles();
 
@@ -165,25 +165,25 @@ public class HtmlUtils {
 
     }
 
-    private static Path getHtmlPath(Path path){
+    private  Path getHtmlPath(Path path){
         return path.resolveSibling(path.getFileName().toString()
                 .substring(0,path.getFileName().toString().lastIndexOf(".")) + ".html");
     }
 
-    public static void deleteHTML(Path path){
+    public  void deleteHTML(Path path){
         if (isHtml(path.toFile())){
             File f = new File(path.toString());
             f.delete();
         }
     }
 
-    public static boolean isHtml(File file){
+    public  boolean isHtml(File file){
         String str= file.toString();
         return str.contains(".html");
     }
 
 
-    public static int getDepth(Path p1,Path p2){
+    public  int getDepth(Path p1,Path p2){
         int result = 0;
 
         String[] p1splitted = p1.toString().split("\\\\");
