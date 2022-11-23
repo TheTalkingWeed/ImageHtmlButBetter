@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HtmlUtils {
+
+
+    public void HtmlUtils(){}
     public static List<Path> getDirs(Path path){
 
         List<Path> result;
